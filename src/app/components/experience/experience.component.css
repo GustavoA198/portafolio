@@ -1,0 +1,61 @@
+.section-title {
+  margin: 0 0 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-200);
+  font-size: 0.85rem;
+}
+
+.timeline {
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.timeline-card {
+  background: linear-gradient(145deg, var(--panel-850), color-mix(in srgb, var(--panel-800) 72%, #0e1f34));
+  border: 1px solid var(--panel-border);
+  border-radius: 0.9rem;
+  padding: 1rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.period {
+  margin: 0;
+  color: var(--accent-300);
+  font-size: 0.8rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+h4 {
+  margin: 0.4rem 0 0;
+  font-size: 1.05rem;
+}
+
+.role {
+  margin: 0.35rem 0 0;
+  font-weight: 700;
+  color: var(--text-200);
+}
+
+.timeline-card p {
+  color: var(--text-300);
+}
+
+.tech-list {
+  list-style: none;
+  margin: 0.9rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tech-list li {
+  border-radius: 999px;
+  border: 1px solid var(--panel-border);
+  padding: 0.2rem 0.6rem;
+  font-size: 0.76rem;
+  color: var(--text-200);
+}

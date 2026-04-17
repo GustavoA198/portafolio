@@ -1,0 +1,16 @@
+<section id="contacto" class="section-shell contact-box">
+  <h3 class="section-title">{{ portfolioService.language() === 'es' ? 'Contactame' : 'Contact me' }}</h3>
+
+  <p>
+    {{ portfolioService.language() === 'es' ? 'Disponible para colaborar en proyectos web y experiencias frontend de alto impacto.' : 'Available for collaboration on web projects and high-impact frontend experiences.' }}
+  </p>
+
+  <ul>
+    @for (contact of portfolioService.content.contacts; track contact.label) {
+      <li>
+        <span>{{ contact.label }}</span>
+        <a [href]="contact.href" target="_blank" rel="noopener">{{ contact.value }}</a>
+      </li>
+    }
+  </ul>
+</section>

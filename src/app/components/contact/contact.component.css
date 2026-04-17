@@ -1,0 +1,52 @@
+.contact-box {
+  background: linear-gradient(130deg, color-mix(in srgb, var(--panel-800) 70%, #10283f), color-mix(in srgb, var(--accent-600) 25%, #0b1a2e));
+}
+
+.section-title {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-200);
+  font-size: 0.85rem;
+}
+
+p {
+  margin: 0.75rem 0 0;
+  color: var(--text-300);
+}
+
+ul {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.7rem;
+  border-bottom: 1px solid var(--panel-border);
+  padding-bottom: 0.55rem;
+}
+
+span {
+  color: var(--text-300);
+}
+
+a {
+  color: var(--accent-300);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus-visible {
+  text-decoration: underline;
+}
+
+@media (max-width: 540px) {
+  li {
+    flex-direction: column;
+  }
+}

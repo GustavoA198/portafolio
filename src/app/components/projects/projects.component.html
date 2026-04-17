@@ -1,0 +1,12 @@
+<section id="proyectos" class="section-shell">
+  <div class="heading-row">
+    <h3 class="section-title">{{ portfolioService.language() === 'es' ? 'Proyectos destacados' : 'Featured projects' }}</h3>
+    <p>{{ portfolioService.language() === 'es' ? '3 proyectos seleccionados para esta primera iteracion.' : '3 selected projects for this first iteration.' }}</p>
+  </div>
+
+  <div class="project-grid">
+    @for (project of portfolioService.content.projects; track project.slug) {
+      <app-project-card [project]="project" />
+    }
+  </div>
+</section>

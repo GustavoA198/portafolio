@@ -1,0 +1,40 @@
+<section id="inicio" class="hero section-shell">
+  <div class="hero-copy">
+    <p class="eyebrow">Portfolio 2026</p>
+    <h1>
+      {{ portfolioService.language() === 'es' ? 'Hola, soy' : 'Hi, I am' }}
+      <span>{{ portfolioService.content.profile.name }}</span>
+    </h1>
+    <h2>{{ portfolioService.t(portfolioService.content.profile.role) }}</h2>
+
+    <p class="hero-headline">{{ portfolioService.t(portfolioService.content.profile.headline) }}</p>
+
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#proyectos">
+        {{ portfolioService.language() === 'es' ? 'Descubre mis proyectos' : 'Explore my projects' }}
+      </a>
+      <a class="btn btn-ghost" [href]="portfolioService.content.profile.cvUrl" target="_blank" rel="noopener">
+        {{ portfolioService.language() === 'es' ? 'Ver CV' : 'View resume' }}
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-figure" aria-hidden="true">
+    <div class="hex-ring">
+      <img
+        [src]="portfolioService.content.profile.avatarUrl"
+        [alt]="portfolioService.content.profile.name"
+        loading="eager"
+      />
+    </div>
+  </div>
+</section>
+
+<section id="sobre-mi" class="about section-shell">
+  <h3>{{ portfolioService.language() === 'es' ? 'Sobre mi' : 'About me' }}</h3>
+  <p>{{ portfolioService.t(portfolioService.content.profile.summary) }}</p>
+  <p class="meta-line">
+    {{ portfolioService.language() === 'es' ? 'Ubicacion:' : 'Location:' }}
+    <strong>{{ portfolioService.content.profile.location }}</strong>
+  </p>
+</section>

@@ -1,0 +1,20 @@
+<section id="experiencia" class="section-shell">
+  <h3 class="section-title">{{ portfolioService.language() === 'es' ? 'Experiencia' : 'Experience' }}</h3>
+
+  <div class="timeline">
+    @for (item of portfolioService.content.experience; track item.company + item.period) {
+      <article class="timeline-card">
+        <p class="period">{{ item.period }}</p>
+        <h4>{{ item.company }}</h4>
+        <p class="role">{{ portfolioService.t(item.role) }}</p>
+        <p>{{ portfolioService.t(item.summary) }}</p>
+
+        <ul class="tech-list">
+          @for (tech of item.stack; track tech) {
+            <li>{{ tech }}</li>
+          }
+        </ul>
+      </article>
+    }
+  </div>
+</section>
