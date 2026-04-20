@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600" fill="none">
-  <rect width="600" height="600" fill="#0D2033"/>
-  <circle cx="300" cy="220" r="104" fill="#183A59"/>
-  <path d="M130 520C130 425.523 206.523 349 301 349C395.477 349 472 425.523 472 520V600H130V520Z" fill="#183A59"/>
-  <circle cx="300" cy="220" r="84" fill="#2C5D86"/>
-  <path d="M170 600V520C170 447.099 229.099 388 302 388C374.901 388 434 447.099 434 520V600H170Z" fill="#2C5D86"/>
-  <text x="300" y="86" fill="#78FFD8" font-size="34" text-anchor="middle" font-family="monospace">GUSTAVO</text>
-</svg>

@@ -1,0 +1,79 @@
+<section class="py-24 md:py-28 xl:py-32 px-6 sm:px-8 md:px-16 xl:px-24 2xl:px-32 relative" id="contact">
+  <div class="max-w-7xl 2xl:max-w-[96rem] mx-auto">
+    <div class="grid lg:grid-cols-[0.95fr_1.05fr] gap-12 xl:gap-24 items-start">
+      <div>
+        <h2 class="text-4xl sm:text-5xl 2xl:text-6xl font-headline font-bold text-white mb-8 leading-tight max-w-xl">{{ contact.titleLineOne }}<br /> {{ contact.titleLineTwo }}</h2>
+        <p class="text-on-surface-variant text-lg sm:text-xl mb-10 xl:mb-12 max-w-md xl:max-w-xl">{{ contact.description }}</p>
+        <div class="space-y-6 xl:space-y-8">
+          <div class="flex items-center gap-6">
+            <div class="w-14 h-14 shrink-0 bg-surface-container-high rounded-full flex items-center justify-center text-primary group cursor-pointer hover:bg-primary hover:text-on-primary-container transition-all">
+              <span class="material-symbols-outlined" data-icon="alternate_email">alternate_email</span>
+            </div>
+            <div>
+              <p class="text-sm text-on-surface-variant uppercase font-bold tracking-widest">{{ contact.emailLabel }}</p>
+              <p class="text-white font-bold text-lg">{{ contact.email }}</p>
+            </div>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-4 mt-8">
+            @for (action of contact.actions; track action.label) {
+              @if (action.variant === 'icon') {
+                <a class="w-16 h-16 bg-surface-container-high rounded-lg flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary-container transition-all shadow-lg" [href]="action.href">
+                  <span class="material-symbols-outlined" [attr.data-icon]="action.icon">{{ action.icon }}</span>
+                </a>
+              } @else {
+                <a class="flex-1 bg-surface-container-high rounded-lg flex items-center px-6 gap-4 text-white hover:bg-primary-container hover:text-on-primary-container transition-all group" [href]="action.href">
+                  <span class="material-symbols-outlined" [attr.data-icon]="action.icon">{{ action.icon }}</span>
+                  <span class="font-bold uppercase tracking-widest text-sm">{{ action.label }}</span>
+                </a>
+              }
+            }
+          </div>
+        </div>
+      </div>
+      <div class="bg-surface-container p-6 sm:p-8 xl:p-10 rounded-2xl shadow-2xl">
+        <form class="space-y-6" (ngSubmit)="sendMessage()">
+          <div class="space-y-2">
+            <label class="text-sm font-bold text-primary uppercase tracking-widest" for="name">Nombre</label>
+            <input
+              id="name"
+              name="name"
+              class="w-full bg-surface-container-lowest border-none rounded-lg p-4 text-white focus:ring-1 focus:ring-primary focus:bg-surface-container-low transition-all placeholder:text-on-tertiary-container"
+              placeholder="Juan Pérez"
+              type="text"
+              [(ngModel)]="formData.name"
+              required
+            />
+          </div>
+          <div class="space-y-2">
+            <label class="text-sm font-bold text-primary uppercase tracking-widest" for="email">Correo electrónico</label>
+            <input
+              id="email"
+              name="email"
+              class="w-full bg-surface-container-lowest border-none rounded-lg p-4 text-white focus:ring-1 focus:ring-primary focus:bg-surface-container-low transition-all placeholder:text-on-tertiary-container"
+              placeholder="juan&#64;correo.com"
+              type="email"
+              [(ngModel)]="formData.email"
+              required
+            />
+          </div>
+          <div class="space-y-2">
+            <label class="text-sm font-bold text-primary uppercase tracking-widest" for="message">Mensaje</label>
+            <textarea
+              id="message"
+              name="message"
+              class="w-full bg-surface-container-lowest border-none rounded-lg p-4 text-white focus:ring-1 focus:ring-primary focus:bg-surface-container-low transition-all placeholder:text-on-tertiary-container"
+              placeholder="¿Cómo puedo ayudarte?"
+              rows="4"
+              [(ngModel)]="formData.message"
+              required
+            ></textarea>
+          </div>
+          <button class="w-full bg-primary-container text-on-primary-container py-4 rounded-lg font-bold text-lg hover:bg-primary transition-all shadow-xl shadow-primary/10 flex items-center justify-center gap-3" type="submit">
+            <span class="material-symbols-outlined" data-icon="send">send</span>
+            Enviar mensaje
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

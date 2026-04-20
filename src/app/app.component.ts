@@ -1,22 +1,10 @@
 import { Component } from '@angular/core';
-import { ContactComponent } from './components/contact/contact.component';
-import { ExperienceComponent } from './components/experience/experience.component';
-import { HeroComponent } from './components/hero/hero.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { ProjectsComponent } from './components/projects/projects.component';
-import { SkillsComponent } from './components/skills/skills.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    NavbarComponent,
-    HeroComponent,
-    ExperienceComponent,
-    ProjectsComponent,
-    SkillsComponent,
-    ContactComponent,
-  ],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

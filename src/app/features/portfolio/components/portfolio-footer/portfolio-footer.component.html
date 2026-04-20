@@ -1,0 +1,12 @@
+<footer class="bg-[#0e141c] border-t border-[#55E6A5]/10 py-10 sm:py-12 px-6 sm:px-8 xl:px-24 2xl:px-32 bg-surface-container-low">
+  <div class="flex flex-col md:flex-row justify-between items-center gap-6 max-w-7xl 2xl:max-w-[96rem] mx-auto text-sm sm:text-base tracking-wide">
+    <div class="text-slate-500">
+      {{ footer.text }}
+    </div>
+    <div class="flex flex-wrap justify-center gap-x-8 gap-y-3">
+      @for (link of footer.links; track link.label) {
+        <a class="text-slate-500 hover:text-[#55E6A5] transition-colors opacity-80 hover:opacity-100" [href]="link.href">{{ link.label }}</a>
+      }
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,12 @@
+<nav class="fixed top-0 w-full z-50 glass-nav shadow-2xl shadow-black/40">
+  <div class="relative flex items-center justify-between w-full max-w-7xl 2xl:max-w-[96rem] mx-auto px-6 sm:px-8 xl:px-12 2xl:px-0 py-4">
+    <a class="text-xl sm:text-2xl font-bold text-[#55E6A5] uppercase tracking-widest font-headline ml-1 sm:ml-2 xl:ml-6 2xl:ml-10" href="#inicio">
+      Portafolio
+    </a>
+    <div class="hidden md:flex items-center gap-8 font-headline tracking-tight absolute left-1/2 -translate-x-1/2">
+      @for (link of content.navLinks; track link.href) {
+        <a class="text-slate-400 hover:text-white transition-colors" [href]="link.href">{{ link.label }}</a>
+      }
+    </div>
+  </div>
+</nav>
