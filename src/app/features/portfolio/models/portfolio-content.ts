@@ -237,7 +237,7 @@ const ES: PortfolioContent = {
     courses: [
       { name: 'SI Architect Certification', provider: 'MongoDB' },
       { name: 'Docker', provider: 'Udemy' },
-      { name: 'Kubernetes', provider: 'Udemy · en curso' },
+      { name: 'Kubernetes', provider: 'Udemy' },
       { name: 'Angular & Spring Boot', provider: 'Udemy' },
       { name: 'Angular: de cero a experto', provider: 'Udemy' },
     ],
@@ -443,7 +443,7 @@ const EN: PortfolioContent = {
     courses: [
       { name: 'SI Architect Certification', provider: 'MongoDB' },
       { name: 'Docker', provider: 'Udemy' },
-      { name: 'Kubernetes', provider: 'Udemy · in progress' },
+      { name: 'Kubernetes', provider: 'Udemy' },
       { name: 'Angular & Spring Boot', provider: 'Udemy' },
       { name: 'Angular: de cero a experto', provider: 'Udemy' },
     ],
