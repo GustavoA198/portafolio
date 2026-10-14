@@ -1,0 +1,121 @@
+<figure class="m-0">
+  @for (layout of layouts; track layout.key) {
+    <svg
+      class="diagram block h-auto w-full"
+      [class.diagram--wide]="layout.key === 'wide'"
+      [class.diagram--narrow]="layout.key === 'narrow'"
+      [attr.viewBox]="layout.viewBox"
+      [attr.aria-label]="content().title"
+      role="group"
+    >
+      <defs>
+        <marker
+          [attr.id]="'arrow-' + layout.key"
+          viewBox="0 0 8 8"
+          refX="7"
+          refY="4"
+          markerWidth="8"
+          markerHeight="8"
+          orient="auto-start-reverse"
+        >
+          <path d="M0 0 L8 4 L0 8 Z" class="diagram__arrow" />
+        </marker>
+        <!-- Recorta el trazo azul con el mismo punteado de las flechas asíncronas -->
+        <mask [attr.id]="'async-' + layout.key" maskUnits="userSpaceOnUse" x="0" y="0" [attr.width]="layout.width" [attr.height]="layout.height">
+          @for (edge of layout.edges; track edge.id) {
+            @if (asyncEdges.has(edge.id)) {
+              <path class="diagram__mask-dash" [attr.d]="edge.d" />
+            }
+          }
+        </mask>
+      </defs>
+
+      <rect
+        class="diagram__boundary"
+        [attr.x]="layout.docker.x"
+        [attr.y]="layout.docker.y"
+        [attr.width]="layout.docker.width"
+        [attr.height]="layout.docker.height"
+        rx="10"
+      />
+
+      @for (edge of layout.edges; track edge.id) {
+        <path
+          class="diagram__edge"
+          [class.diagram__edge--async]="asyncEdges.has(edge.id)"
+          [attr.d]="edge.d"
+          [attr.marker-end]="'url(#arrow-' + layout.key + ')'"
+        />
+      }
+
+      @for (flow of layout.flows; track $index) {
+        <path
+          [class]="'diagram__flow diagram__flow--' + $index"
+          [attr.d]="flow.d"
+          [attr.mask]="flow.async ? 'url(#async-' + layout.key + ')' : null"
+          pathLength="1"
+        />
+      }
+
+      @for (edge of layout.edges; track edge.id; let step = $index) {
+        <circle class="diagram__step" [attr.cx]="edge.labelX" [attr.cy]="edge.labelY - 4.5" r="7.5" />
+        <text class="diagram__step-number" [attr.x]="edge.labelX" [attr.y]="edge.labelY - 1" text-anchor="middle" aria-hidden="true">
+          {{ step + 1 }}
+        </text>
+        <text class="diagram__edge-label" [attr.x]="edge.labelX + 12" [attr.y]="edge.labelY">{{ content().edges[edge.id] }}</text>
+      }
+
+      <g class="diagram__legend" [attr.transform]="'translate(' + layout.legend.x + ' ' + layout.legend.y + ')'">
+        <path class="diagram__edge" d="M0 0 H26" />
+        <text class="diagram__edge-label" x="34" y="4.5">{{ content().legend.sync }}</text>
+        <path class="diagram__edge diagram__edge--async" d="M0 22 H26" />
+        <text class="diagram__edge-label" x="34" y="26.5">{{ content().legend.async }}</text>
+      </g>
+
+      @for (item of layout.nodes; track item.id) {
+        <g
+          class="diagram__node"
+          [class.is-active]="activeId() === item.id"
+          [attr.transform]="'translate(' + item.x + ' ' + item.y + ')'"
+          tabindex="0"
+          role="button"
+          [attr.aria-label]="node(item.id).name + ', ' + node(item.id).role"
+          [attr.aria-pressed]="activeId() === item.id"
+          (mouseenter)="select(item.id)"
+          (focus)="select(item.id)"
+          (click)="select(item.id)"
+          (keydown.enter)="select(item.id)"
+          (keydown.space)="select(item.id); $event.preventDefault()"
+        >
+          <rect [attr.width]="layout.nodeWidth" [attr.height]="layout.nodeHeight" rx="6" />
+          <text class="diagram__name" x="14" [attr.y]="layout.nodeHeight / 2 - 3">{{ node(item.id).name }}</text>
+          <text class="diagram__role" x="14" [attr.y]="layout.nodeHeight / 2 + 15">{{ node(item.id).role }}</text>
+        </g>
+      }
+
+      <g
+        class="diagram__node diagram__node--label"
+        [class.is-active]="activeId() === 'docker'"
+        tabindex="0"
+        role="button"
+        [attr.aria-label]="node('docker').name + ', ' + node('docker').role"
+        [attr.aria-pressed]="activeId() === 'docker'"
+        (mouseenter)="select('docker')"
+        (focus)="select('docker')"
+        (click)="select('docker')"
+        (keydown.enter)="select('docker')"
+        (keydown.space)="select('docker'); $event.preventDefault()"
+      >
+        <text class="diagram__name" [attr.x]="layout.docker.labelX" [attr.y]="layout.docker.labelY">{{ node('docker').name }}</text>
+      </g>
+    </svg>
+  }
+
+  <figcaption class="mt-5 min-h-[4.5rem] max-w-[34rem] text-[0.9375rem] leading-relaxed text-graphite" aria-live="polite">
+    @if (active(); as current) {
+      <strong class="font-semibold text-ink">{{ current.name }}</strong>, {{ current.role }}. {{ current.detail }}
+    } @else {
+      {{ content().hint }}
+    }
+  </figcaption>
+</figure>

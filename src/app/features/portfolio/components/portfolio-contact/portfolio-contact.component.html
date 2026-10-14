@@ -1,79 +1,51 @@
-<section class="py-24 md:py-28 xl:py-32 px-6 sm:px-8 md:px-16 xl:px-24 2xl:px-32 relative" id="contact">
-  <div class="max-w-7xl 2xl:max-w-[96rem] mx-auto">
-    <div class="grid lg:grid-cols-[0.95fr_1.05fr] gap-12 xl:gap-24 items-start">
-      <div>
-        <h2 class="text-4xl sm:text-5xl 2xl:text-6xl font-headline font-bold text-white mb-8 leading-tight max-w-xl">{{ contact.titleLineOne }}<br /> {{ contact.titleLineTwo }}</h2>
-        <p class="text-on-surface-variant text-lg sm:text-xl mb-10 xl:mb-12 max-w-md xl:max-w-xl">{{ contact.description }}</p>
-        <div class="space-y-6 xl:space-y-8">
-          <div class="flex items-center gap-6">
-            <div class="w-14 h-14 shrink-0 bg-surface-container-high rounded-full flex items-center justify-center text-primary group cursor-pointer hover:bg-primary hover:text-on-primary-container transition-all">
-              <span class="material-symbols-outlined" data-icon="alternate_email">alternate_email</span>
-            </div>
-            <div>
-              <p class="text-sm text-on-surface-variant uppercase font-bold tracking-widest">{{ contact.emailLabel }}</p>
-              <p class="text-white font-bold text-lg">{{ contact.email }}</p>
-            </div>
-          </div>
-          <div class="flex flex-col sm:flex-row gap-4 mt-8">
-            @for (action of contact.actions; track action.label) {
-              @if (action.variant === 'icon') {
-                <a class="w-16 h-16 bg-surface-container-high rounded-lg flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary-container transition-all shadow-lg" [href]="action.href">
-                  <span class="material-symbols-outlined" [attr.data-icon]="action.icon">{{ action.icon }}</span>
-                </a>
-              } @else {
-                <a class="flex-1 bg-surface-container-high rounded-lg flex items-center px-6 gap-4 text-white hover:bg-primary-container hover:text-on-primary-container transition-all group" [href]="action.href">
-                  <span class="material-symbols-outlined" [attr.data-icon]="action.icon">{{ action.icon }}</span>
-                  <span class="font-bold uppercase tracking-widest text-sm">{{ action.label }}</span>
-                </a>
+<section id="contact" class="border-t border-stroke" aria-labelledby="contact-heading">
+  <div class="mx-auto grid max-w-[72rem] gap-10 px-4 py-20 sm:px-6 lg:grid-cols-12 lg:py-28">
+    <h2 id="contact-heading" class="type-heading text-[2.125rem] lg:col-span-4">{{ contact().heading }}</h2>
+
+    <div class="lg:col-span-8">
+      <p class="max-w-[34rem] text-xl leading-relaxed text-graphite">{{ contact().text }}</p>
+
+      <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+        <a
+          class="text-[clamp(1.2rem,4.6vw,2.5rem)] font-semibold leading-tight text-signal underline decoration-1 underline-offset-[0.2em] [overflow-wrap:anywhere] hover:decoration-2"
+          [href]="'mailto:' + contact().email"
+        >
+          {{ contact().email }}
+        </a>
+        <button
+          type="button"
+          class="inline-flex items-center gap-2 rounded border border-stroke px-3.5 py-2 text-[0.9375rem] font-semibold transition-colors hover:border-ink"
+          (click)="copyEmail()"
+        >
+          <app-icon [name]="copyState() === 'copied' ? 'check' : 'copy'" [size]="17" />
+          {{ copyState() === 'copied' ? contact().copiedLabel : contact().copyLabel }}
+        </button>
+      </div>
+      <p class="mt-3 min-h-6 text-sm text-graphite" role="status">
+        @if (copyState() === 'failed') {
+          {{ contact().copyFailedLabel }}
+        }
+      </p>
+
+      <ul class="mt-10 max-w-[38rem] border-t border-stroke">
+        @for (link of contact().links; track link.href) {
+          <li class="border-b border-stroke">
+            <a
+              class="group grid grid-cols-[1.5rem_1fr] items-center gap-x-4 py-4 sm:grid-cols-[1.5rem_8rem_1fr]"
+              [href]="link.href"
+              [attr.target]="link.external ? '_blank' : null"
+              [attr.rel]="link.external ? 'noopener' : null"
+            >
+              <app-icon class="text-graphite group-hover:text-signal" [name]="link.icon" [size]="20" />
+              <span class="type-condensed text-graphite">{{ link.label }}</span>
+              <span class="col-start-2 font-semibold group-hover:text-signal group-hover:underline sm:col-start-auto">{{ link.value }}</span>
+              @if (link.external) {
+                <span class="sr-only">({{ newTab() }})</span>
               }
-            }
-          </div>
-        </div>
-      </div>
-      <div class="bg-surface-container p-6 sm:p-8 xl:p-10 rounded-2xl shadow-2xl">
-        <form class="space-y-6" (ngSubmit)="sendMessage()">
-          <div class="space-y-2">
-            <label class="text-sm font-bold text-primary uppercase tracking-widest" for="name">Nombre</label>
-            <input
-              id="name"
-              name="name"
-              class="w-full bg-surface-container-lowest border-none rounded-lg p-4 text-white focus:ring-1 focus:ring-primary focus:bg-surface-container-low transition-all placeholder:text-on-tertiary-container"
-              placeholder="Juan Pérez"
-              type="text"
-              [(ngModel)]="formData.name"
-              required
-            />
-          </div>
-          <div class="space-y-2">
-            <label class="text-sm font-bold text-primary uppercase tracking-widest" for="email">Correo electrónico</label>
-            <input
-              id="email"
-              name="email"
-              class="w-full bg-surface-container-lowest border-none rounded-lg p-4 text-white focus:ring-1 focus:ring-primary focus:bg-surface-container-low transition-all placeholder:text-on-tertiary-container"
-              placeholder="juan&#64;correo.com"
-              type="email"
-              [(ngModel)]="formData.email"
-              required
-            />
-          </div>
-          <div class="space-y-2">
-            <label class="text-sm font-bold text-primary uppercase tracking-widest" for="message">Mensaje</label>
-            <textarea
-              id="message"
-              name="message"
-              class="w-full bg-surface-container-lowest border-none rounded-lg p-4 text-white focus:ring-1 focus:ring-primary focus:bg-surface-container-low transition-all placeholder:text-on-tertiary-container"
-              placeholder="¿Cómo puedo ayudarte?"
-              rows="4"
-              [(ngModel)]="formData.message"
-              required
-            ></textarea>
-          </div>
-          <button class="w-full bg-primary-container text-on-primary-container py-4 rounded-lg font-bold text-lg hover:bg-primary transition-all shadow-xl shadow-primary/10 flex items-center justify-center gap-3" type="submit">
-            <span class="material-symbols-outlined" data-icon="send">send</span>
-            Enviar mensaje
-          </button>
-        </form>
-      </div>
+            </a>
+          </li>
+        }
+      </ul>
     </div>
   </div>
 </section>

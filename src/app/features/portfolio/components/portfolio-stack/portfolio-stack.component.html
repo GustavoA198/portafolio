@@ -1,0 +1,20 @@
+<section id="stack" class="border-t border-stroke" aria-labelledby="stack-heading">
+  <div class="mx-auto grid max-w-[72rem] gap-10 px-4 py-20 sm:px-6 lg:grid-cols-12 lg:py-28">
+    <h2 id="stack-heading" class="type-heading text-[2.125rem] lg:col-span-4">{{ stack().heading }}</h2>
+
+    <dl class="border-t border-stroke lg:col-span-8">
+      @for (group of stack().groups; track group.name) {
+        <div class="grid gap-1 border-b border-stroke py-5 sm:grid-cols-[14rem_1fr] sm:gap-6">
+          <dt class="type-condensed text-graphite">{{ group.name }}</dt>
+          <dd class="m-0">
+            <ul class="flex flex-wrap gap-x-5 gap-y-1 text-lg">
+              @for (item of group.items; track item) {
+                <li>{{ item }}</li>
+              }
+            </ul>
+          </dd>
+        </div>
+      }
+    </dl>
+  </div>
+</section>

@@ -1,0 +1,39 @@
+<section id="education" class="border-t border-stroke" aria-labelledby="education-heading">
+  <div class="mx-auto grid max-w-[72rem] gap-10 px-4 py-20 sm:px-6 lg:grid-cols-12 lg:py-28">
+    <h2 id="education-heading" class="type-heading text-[2.125rem] lg:col-span-4">{{ education().heading }}</h2>
+
+    <div class="grid gap-12 sm:grid-cols-2 lg:col-span-8 xl:grid-cols-3 xl:gap-10">
+      <div>
+        <h3 class="type-condensed text-graphite">{{ education().degreeHeading }}</h3>
+        <p class="type-heading mt-3 text-[1.3125rem]">{{ education().degree.title }}</p>
+        <p class="mt-1">{{ education().degree.school }}</p>
+        <p class="text-graphite">{{ education().degree.location }}</p>
+        <p class="type-condensed mt-2 text-graphite">{{ education().degree.period }}</p>
+      </div>
+
+      <div>
+        <h3 class="type-condensed text-graphite">{{ education().coursesHeading }}</h3>
+        <ul class="mt-3 space-y-3">
+          @for (course of education().courses; track course.name) {
+            <li>
+              <span class="block">{{ course.name }}</span>
+              <span class="block text-sm text-graphite">{{ course.provider }}</span>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="type-condensed text-graphite">{{ education().languagesHeading }}</h3>
+        <ul class="mt-3 space-y-3">
+          @for (language of education().languages; track language.name) {
+            <li>
+              <span class="block">{{ language.name }}</span>
+              <span class="block text-sm text-graphite">{{ language.level }}</span>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

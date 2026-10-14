@@ -1,0 +1,34 @@
+<section id="profile" class="border-t border-stroke" aria-labelledby="profile-heading">
+  <div class="mx-auto grid max-w-[72rem] gap-10 px-4 py-20 sm:px-6 lg:grid-cols-12 lg:py-28">
+    <div class="lg:col-span-4">
+      <h2 id="profile-heading" class="type-heading text-[2.125rem]">{{ profile().heading }}</h2>
+      <picture class="mt-8 block max-w-[20rem]">
+        <source srcset="assets/gustavo.webp" type="image/webp" />
+        <img
+          class="block aspect-[4/5] w-full object-cover"
+          src="assets/gustavo.jpg"
+          [alt]="profile().photoAlt"
+          width="720"
+          height="900"
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
+    </div>
+
+    <div class="lg:col-span-7 lg:col-start-6">
+      @for (paragraph of profile().paragraphs; track $index) {
+        <p class="max-w-[38rem] text-xl leading-relaxed first:mt-0 mt-6" [class.text-graphite]="!$first">{{ paragraph }}</p>
+      }
+
+      <dl class="mt-12 max-w-[38rem] border-t border-stroke">
+        @for (fact of profile().facts; track fact.term) {
+          <div class="grid gap-1 border-b border-stroke py-4 sm:grid-cols-[11rem_1fr] sm:gap-6">
+            <dt class="type-condensed text-graphite">{{ fact.term }}</dt>
+            <dd class="m-0">{{ fact.value }}</dd>
+          </div>
+        }
+      </dl>
+    </div>
+  </div>
+</section>

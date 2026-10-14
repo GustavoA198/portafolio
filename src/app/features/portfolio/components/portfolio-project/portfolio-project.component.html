@@ -1,0 +1,61 @@
+<section id="project" class="border-t border-stroke" aria-labelledby="project-heading">
+  <div class="mx-auto grid max-w-[72rem] gap-10 px-4 py-20 sm:px-6 lg:grid-cols-12 lg:py-28">
+    <div class="lg:col-span-4">
+      <p id="project-heading" class="type-heading text-[2.125rem]">{{ project().heading }}</p>
+    </div>
+
+    <div class="lg:col-span-8">
+      <h2 class="type-display text-[clamp(2.5rem,6vw,4rem)]">{{ project().name }}</h2>
+      <p class="mt-5 max-w-[38rem] text-xl leading-relaxed">{{ project().summary }}</p>
+
+      <div class="mt-8 flex flex-wrap items-center gap-x-7 gap-y-3">
+        <a class="link inline-flex items-center gap-2 font-semibold" [href]="project().repoHref" target="_blank" rel="noopener">
+          <app-icon name="github" [size]="18" />
+          {{ project().repoLabel }}
+          <span class="sr-only">({{ newTab() }})</span>
+        </a>
+        <a class="link inline-flex items-center gap-2 font-semibold" [href]="project().demoHref" target="_blank" rel="noopener">
+          <app-icon name="external" [size]="18" />
+          {{ project().demoLabel }}
+          <span class="sr-only">({{ newTab() }})</span>
+        </a>
+        <span class="text-sm text-graphite">{{ project().demoNote }}</span>
+      </div>
+
+      @if (project().images.length) {
+        <div class="mt-12 grid gap-4 sm:grid-cols-2">
+          @for (image of project().images; track image.src) {
+            <img
+              class="block w-full border border-stroke first:sm:col-span-2"
+              [src]="image.src"
+              [alt]="image.alt"
+              [attr.width]="image.width"
+              [attr.height]="image.height"
+              loading="lazy"
+              decoding="async"
+            />
+          }
+        </div>
+      }
+
+      <div class="mt-14 grid gap-10 md:grid-cols-[1fr_12rem]">
+        <div>
+          <h3 class="type-heading text-[1.3125rem]">{{ project().decisionsHeading }}</h3>
+          <ul class="mt-5 space-y-3 text-graphite">
+            @for (decision of project().decisions; track $index) {
+              <li class="relative max-w-[38rem] pl-5 before:absolute before:left-0 before:top-[0.8em] before:h-px before:w-2.5 before:bg-graphite">{{ decision }}</li>
+            }
+          </ul>
+        </div>
+        <div>
+          <h3 class="type-heading text-[1.3125rem]">{{ project().stackHeading }}</h3>
+          <ul class="mt-5 space-y-1.5">
+            @for (tech of project().stack; track tech) {
+              <li>{{ tech }}</li>
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

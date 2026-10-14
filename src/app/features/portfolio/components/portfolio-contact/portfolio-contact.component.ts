@@ -1,39 +1,37 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { PORTFOLIO_CONTENT } from '../../models/portfolio-content';
+import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, signal } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { IconComponent } from '../../../../shared/ui/icon/icon.component';
+import { injectPortfolioContent } from '../../portfolio-content';
+
+type CopyState = 'idle' | 'copied' | 'failed';
 
 @Component({
   selector: 'app-portfolio-contact',
-  standalone: true,
-  imports: [FormsModule],
+  imports: [IconComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './portfolio-contact.component.html',
-  styleUrls: ['./portfolio-contact.component.css'],
 })
 export class PortfolioContactComponent {
-  protected readonly contact = PORTFOLIO_CONTENT.contact;
+  private readonly document = inject(DOCUMENT);
+  private readonly content = injectPortfolioContent();
+  private resetTimer: ReturnType<typeof setTimeout> | undefined;
 
-  protected formData = {
-    name: '',
-    email: '',
-    message: '',
-  };
+  protected readonly contact = computed(() => this.content().contact);
+  protected readonly newTab = computed(() => this.content().ui.newTab);
+  protected readonly copyState = signal<CopyState>('idle');
 
-  protected sendMessage(): void {
-    const subject = `Nuevo mensaje desde el portafolio - ${this.formData.name || 'Sin nombre'}`;
-    const bodyLines = [
-      `Nombre: ${this.formData.name || 'No especificado'}`,
-      `Correo: ${this.formData.email || 'No especificado'}`,
-      '',
-      this.formData.message || 'Sin mensaje',
-    ];
+  constructor() {
+    inject(DestroyRef).onDestroy(() => clearTimeout(this.resetTimer));
+  }
 
-    const gmailComposeUrl = new URL('https://mail.google.com/mail/');
-    gmailComposeUrl.searchParams.set('view', 'cm');
-    gmailComposeUrl.searchParams.set('fs', '1');
-    gmailComposeUrl.searchParams.set('to', this.contact.email);
-    gmailComposeUrl.searchParams.set('su', subject);
-    gmailComposeUrl.searchParams.set('body', bodyLines.join('\n'));
-
-    window.open(gmailComposeUrl.toString(), '_blank', 'noopener,noreferrer');
+  protected async copyEmail(): Promise<void> {
+    try {
+      await this.document.defaultView!.navigator.clipboard.writeText(this.contact().email);
+      this.copyState.set('copied');
+    } catch {
+      this.copyState.set('failed');
+    }
+    clearTimeout(this.resetTimer);
+    this.resetTimer = setTimeout(() => this.copyState.set('idle'), 4000);
   }
 }
